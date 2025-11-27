@@ -1,0 +1,30 @@
+@if (totalPages() > 1) {
+  <div class="flex justify-center items-center gap-2 mt-8">
+    <button
+      (click)="onPageChange(currentPage() - 1)"
+      [disabled]="currentPage() === 1"
+      class="px-4 py-2 bg-gray-300 rounded disabled:opacity-50 hover:bg-gray-400 transition-colors"
+    >
+      Previous
+    </button>
+
+    @for (page of getPageNumbers(); track page) {
+      <button
+        (click)="onPageChange(page)"
+        [class]="currentPage() === page ?
+                 'px-4 py-2 bg-blue-500 text-white rounded' :
+                 'px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition-colors'"
+      >
+        {{ page }}
+      </button>
+    }
+
+    <button
+      (click)="onPageChange(currentPage() + 1)"
+      [disabled]="currentPage() === totalPages()"
+      class="px-4 py-2 bg-gray-300 rounded disabled:opacity-50 hover:bg-gray-400 transition-colors"
+    >
+      Next
+    </button>
+  </div>
+}

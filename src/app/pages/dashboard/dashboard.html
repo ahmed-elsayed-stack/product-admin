@@ -1,0 +1,49 @@
+<div class="p-6">
+  <h1 class="text-3xl font-bold mb-6">Dashboard</h1>
+
+  <!-- Stats Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <!-- Total Products -->
+    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+      <h3 class="text-lg font-semibold text-gray-600">Total Products</h3>
+      <p class="text-4xl font-bold text-blue-600 mt-2">{{ stats().totalProducts }}</p>
+    </div>
+
+    <!-- In Stock -->
+    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+      <h3 class="text-lg font-semibold text-gray-600">In Stock</h3>
+      <p class="text-4xl font-bold text-green-600 mt-2">{{ stats().inStockCount }}</p>
+    </div>
+
+    <!-- Average Price -->
+    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+      <h3 class="text-lg font-semibold text-gray-600">Average Price</h3>
+      <p class="text-4xl font-bold text-purple-600 mt-2">${{ stats().averagePrice.toFixed(2) }}</p>
+    </div>
+  </div>
+
+  <!-- Recent Products - مع Horizontal Scroll -->
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-semibold">Recent Products</h3>
+      <a
+        routerLink="/products"
+        class="text-blue-500 hover:text-blue-700 text-sm font-medium"
+      >
+        View All Products →
+      </a>
+    </div>
+
+    <!-- Horizontal Scroll Container -->
+    <div class="flex space-x-6 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+      @for (product of stats().recentProducts; track product.id) {
+        <div class="min-w-[280px] flex-shrink-0">
+          <app-product-card
+            [product]="product"
+            (deleteProduct)="onDeleteProduct($event)"
+          ></app-product-card>
+        </div>
+      }
+    </div>
+  </div>
+</div>

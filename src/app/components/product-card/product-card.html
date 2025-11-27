@@ -1,0 +1,82 @@
+<div
+  class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow cursor-pointer relative"
+  (click)="goToProductDetails()"
+>
+  <!-- Delete Button - Top Right -->
+  <button
+    (click)="$event.stopPropagation(); onDeleteClick()"
+    class="absolute top-2 right-2 p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
+    title="Delete Product"
+  >
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+    </svg>
+  </button>
+
+  <img aria-label="drawing of a cat" [src]="product().image" [alt]="product().name" class="w-full h-48 object-cover rounded">
+
+  <div class="mt-4">
+    <h3 class="text-lg font-semibold">{{ product().name }}</h3>
+    <p class="text-gray-600 text-sm mt-1">{{ product().category }}</p>
+    <p class="text-green-600 font-bold mt-2">${{ product().price.toFixed(2) }}</p>
+
+    <div class="flex justify-between items-center mt-4">
+      <span [class]="product().inStock ? 'text-green-600' : 'text-red-600'">
+        {{ product().inStock ? 'In Stock' : 'Out of Stock' }}
+      </span>
+
+      <button
+        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+        (click)="$event.stopPropagation()"
+      >
+        Add to Cart
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+@if (showDeleteModal()) {
+  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 w-96 max-w-full mx-4">
+      <!-- Header -->
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-red-600">Delete Product</h3>
+      </div>
+
+      <!-- Message -->
+      <div class="mb-6">
+        <p class="text-gray-700 mb-2">Are you sure you want to delete this product?</p>
+        <p class="font-semibold text-gray-900">"{{ product().name }}"</p>
+        <p class="text-sm text-gray-500">This action cannot be undone.</p>
+      </div>
+
+      <!-- Product Info -->
+      <div class="bg-gray-50 p-3 rounded mb-6">
+        <div class="flex items-center space-x-3">
+          <img aria-label="drawing of a cat" [src]="product().image" [alt]="product().name" class="w-12 h-12 object-cover rounded">
+          <div>
+            <p class="font-medium">{{ product().name }}</p>
+            <p class="text-sm text-gray-600">${{ product().price.toFixed(2) }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex justify-end space-x-3">
+        <button
+          (click)="onCancelDelete()"
+          class="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
+        >
+          Cancel
+        </button>
+        <button
+          (click)="onConfirmDelete()"
+          class="px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors"
+        >
+          Delete Product
+        </button>
+      </div>
+    </div>
+  </div>
+}
