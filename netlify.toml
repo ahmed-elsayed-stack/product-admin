@@ -2,12 +2,5 @@
   command = "npm run build"
   publish = "dist/product-admin/browser"
 
-[[plugins]]
-  package = "@netlify/angular-runtime"
-
 [build.environment]
-  NODE_VERSION = "18"
-  NPM_VERSION = "9"
-
-[functions]
-  directory = "netlify/functions"
+  NODE_VERSION = "20.9.0"
